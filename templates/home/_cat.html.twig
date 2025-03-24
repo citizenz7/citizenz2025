@@ -1,0 +1,12 @@
+<div class="max-w-7xl mx-auto py-8 px-4 border-b border-gray-300">
+    <ul class="flex gap-8 items-center justify-center flex-wrap md:gap-12">
+        {% for cat in categories %}
+            <li>
+                <a href="{{ path('app_category_show', {'slug': cat.slug}) }}" class="font-semibold text-sm md:text-base" style="color: {{ cat.color}};">{{ cat.title }}</a>
+            </li>
+        {% endfor %}
+        <li>
+            <a class="text-orange-600 font-semibold text-sm md:text-base" href="{{ path('app_category_index') }}">Toutes les catégories</a>
+        </li>
+    </ul>
+</div>

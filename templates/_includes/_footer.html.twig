@@ -1,0 +1,65 @@
+<footer class="bg-gray-900 text-white py-8 md:py-12 lg:py-16 xl:py-20 h-full">
+    <div class="max-w-7xl mx-auto py-4 md:py-8 px-4 flex justify-center md:justify-between flex-wrap gap-4 md:gap-5 lg:gap-7 xl:gap-9 border-b border-gray-800">
+        <div class="w-full text-center md:text-left lg:w-[32%]">
+            <h3 class="font-bold text-2xl lg:text-3xl xl:text-4xl mb-4">
+                Citizen<span class="text-orange-600 font-extrabold">Z</span>
+            </h3>
+            <p class="text-xs md:text-xs/5 text-justify">{{ settings.siteFooterdescription|raw|nl2br }}</p>
+        </div>
+        <div class="w-full text-center md:text-left lg:w-[15%]">
+            <h3 class="font-bold text-lg md:text-xl mb-4">Menu</h3>
+            <ul class="list-none text-xs/7 md:text-sm/7">
+                <li><i class="fa-solid fa-square-caret-right mr-2"></i><a class="text-gray-400 hover:text-orange-600" href="{{ path('app_home') }}">Accueil</a></li>
+                <li><i class="fa-solid fa-square-caret-right mr-2"></i><a class="text-gray-400 hover:text-orange-600" href="{{ path('app_articles') }}">Tous les articles</a></li>
+                <li><i class="fa-solid fa-square-caret-right mr-2"></i><a class="text-gray-400 hover:text-orange-600" href="{{ path('app_category_index') }}">Toutes les catégories</a></li>
+                <li><i class="fa-solid fa-square-caret-right mr-2"></i><a class="text-gray-400 hover:text-orange-600" href="{{ path('app_apropos') }}">A propos</a></li>
+                <li><i class="fa-solid fa-square-caret-right mr-2"></i><a class="text-gray-400 hover:text-orange-600" href="{{ path('app_contact') }}">Contact</a></li>
+                <li><i class="fa-solid fa-square-caret-right mr-2"></i><a class="text-gray-400 hover:text-orange-600" href="{{ path('app_cgu') }}">Contitions d'utilisation</a></li>
+            </ul>
+        </div>
+        <div class="w-full  text-center md:text-left lg:w-[15%]">
+            <h3 class="font-bold text-lg md:text-xl mb-4">Catégories</h3>
+            <ul class="list-none text-xs/7 md:text-sm/7">
+                {% for category in categories %}
+                    <li><i class="fa-solid fa-chevron-right mr-2"></i><a class="text-gray-400 hover:text-orange-600" href="{{ path('app_category_show', {'slug': category.slug}) }}">{{ category.title }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="w-full text-center md:text-left lg:w-[28%]">
+            <h3 class="font-bold text-lg md:text-xl mb-4">Derniers commentaires</h3>
+            <ul class="list-none text-xs/7 md:text-xs/7">
+                {% for comment in comments %}
+                    <li>
+                        <i class="fa-solid fa-caret-right mr-2"></i>
+                        <a class="text-gray-400 hover:text-orange-600" href="{{ path('app_article', {'slug': comment.article.slug}) }}#comment-{{ comment.id }}">
+                            {{ comment.content|slice(0, 50) }}...
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    <div class="max-w-7xl mx-auto py-6 px-4 xl:px-0 flex flex-col-reverse md:flex-row justify-between items-center">
+        <div class="text-xs md:text-sm flex items-center">
+            CitizenJ &bullet;
+            <a href="https://www.gnu.org/licenses/gpl-3.0.fr.html" title="Licence GNU GPL v3" target="_blank" class="mx-1 hover:text-orange-600">
+                GPL v3
+            </a> &bullet;
+            {{ "now"|date("Y") }} &bull; Certains droits reservés
+        </div>
+        <ul class="text-xs md:text-sm flex gap-4 md:gap-5 mb-4 md:mb-0">
+            {% for social in socials %}
+                <li>
+                    <a href="{{ social.url }}" class="hover:text-orange-600 text-xl">
+                        {{ social.icon|raw }}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="max-w-7xl mx-auto text-center px-4 xl:px-0">
+        <blockquote class="text-xs lg:text-sm text-gray-300 border bg-gray-700/90 border-gray-600 p-4 rounded">
+            {{ citation.content|raw|nl2br }}
+        </blockquote>
+    </div>
+</footer>

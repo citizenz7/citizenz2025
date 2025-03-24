@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{# {% block title %}Hello HomeController!{% endblock %} #}
+
+{% block body %}
+    <main>
+        {% include "home/_hero.html.twig" %}
+        {% include "home/_cat.html.twig" %}
+        {% include "home/_articles-list.html.twig" %}
+    </main>
+{% endblock %}

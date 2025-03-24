@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{# {% block title %}Hello SearchController!{% endblock %} #}
+
+{% block body %}
+<div class="max-w-7xl mx-auto py-32">
+    <h1 class="mb-4 text-4xl tracking-tight font-extrabold text-center text-gray-900 dark:text-white">Recherche</h1>
+
+    <div>
+        <h2 class="mb-4 text-2xl tracking-tight text-center text-gray-500 dark:text-white">Faire une recherche d'articles</h2>
+        <div>
+            {{ form_start(searchForm, { 'attr': { 'class': 'w-full bg-white text-sm shadow-md rounded px-8 pt-6 pb-4 mb-18' } }) }}
+                {{ form_row(searchForm.title, {'id': 'search-titre'}) }}
+                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Rechercher</button>
+            {{ form_end(searchForm) }}
+        </div>
+
+        {% if app.request.method == 'POST' %}
+            {% if articles|length == 0 %}
+                <h3 class="mb-4 text-xl tracking-tight text-center text-red-400 dark:text-white">Aucun résulat pour votre recherche.</h3>
+            {% else %}
+                <h3 class="mt-12 mb-6 text-lg md:text-xl tracking-tight font-bold text-gray-700 dark:text-white">Voici les articles correspondants :</h3>
+                {% for article in articles %}
+                    <div class="my-6">
+                        <a href="{{ path('app_article', {'slug': article.slug}) }}">
+                            <h4 class="text-xl font-semibold tracking-tight text-blue-700 dark:text-white">
+                                {{ article.title }}
+                                <i class="fa-solid fa-arrow-up-right-from-square text-orange-600"></i>
+                            </h4>
+                            <span class="text-xs md:text-sm text-gray-500">
+                                Publié le {{ article.createdAt|date('d/m/Y') }}, par {{ article.author.firstname }} {{ article.author.lastname }}, dans <span style="color: {{ article.category.color }};">{{ article.category.title }}</span>
+                            </span>
+                        </a>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

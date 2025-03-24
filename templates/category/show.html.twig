@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{# {% block title %}Category{% endblock %} #}
+
+{% block body %}
+    <div class="max-w-7xl mx-auto pt-28 pb-20 relative">
+        <h1 class="text-2xl md:text-3xl font-bold mt-4 text-center" style="color: {{ category.color}};">{{ category.title }}</h1>
+
+        <div class="flex flex-wrap gap-4 mt-8">
+            {% if category.articles|length > 0 %}
+                {# Tous les articles de la catégorie #}
+                {% for article in category.articles %}
+                    <div class="w-full p-6 sm:w-[47%] shadow-lg hover:shadow-2xl transition-shadow duration-300 ease-in-out cursor-pointer mb-4 relative">
+                        <a href="{{ path('app_article', {'slug': article.slug}) }}">
+                            <img src="{{ asset('uploads/img/articles/' ~ article.imageFeatured) }}" alt="{{ article.title }}" class="w-full h-48 object-cover rounded relative">
+                            <h2 class="mt-4 text-base font-semibold">{{ article.title }}
+                            </h2>
+                            <div class="relative">
+                                <p class="text-sm text-gray-600 line-clamp-2">
+                                    {{ article.intro|replace({'<div>': '', '</div>': '',})|raw }}
+                                </p>
+                            </div>
+                            <div class="mt-4 text-xs flex justify-between relative">
+                                <div class="flex gap-2">
+                                    <span>
+                                        {# Auteur de l'article #}
+                                        <i class="fa-regular fa-user"></i>
+                                        {{ article.author }}
+                                    </span>
+                                    <span>
+                                        {# Date de publication de l'article #}
+                                        <i class="fa-regular fa-calendar-days"></i>
+                                        {{ article.createdAt|ago }}
+                                    </span>
+                                </div>
+                                <div class="flex gap-2">
+                                <span>
+                                        {# Nombre de commentaires de l'article #}
+                                        <i class="fa-regular fa-comment"></i>
+                                        {{ article.comments|length }}
+                                    </span>
+                                    <span>
+                                        {# Nombre de vues de l'article #}
+                                        <i class="fa-regular fa-eye"></i>
+                                        {{ article.views }}
+                                    </span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="w-full mx-auto p-6 sm:w-[47%] shadow-lg hover:shadow-2xl transition-shadow duration-300 ease-in-out cursor-pointer mb-4 relative">
+                    <h2 class="mt-4 text-base font-semibold text-center">Aucun article dans cette catégorie</h2>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

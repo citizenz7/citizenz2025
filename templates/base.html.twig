@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <script src="/js/tarteaucitron.js-1.19.0/tarteaucitron.js"></script>
+
+        <script>
+            var tarteaucitronForceExpire = 184; // 6 mois pour les cookies
+        </script>
+
+        <script type="text/javascript">
+            tarteaucitron.init({
+                "privacyUrl": "", /* Privacy policy url */
+                "bodyPosition": "bottom", /* or top to bring it as first element for accessibility */
+
+                "hashtag": "#tarteaucitron", /* Open the panel with this hashtag */
+                "cookieName": "tarteaucitron", /* Cookie name */
+
+                "orientation": "middle", /* Banner position (top - bottom) */
+
+                "groupServices": false, /* Group services by category */
+                "showDetailsOnClick": true, /* Click to expand the description */
+                "serviceDefaultState": "wait", /* Default state (true - wait - false) */
+
+                "showAlertSmall": false, /* Show the small banner on bottom right */
+                "cookieslist": false, /* Show the cookie list */
+
+                "closePopup": true, /* Show a close X on the banner */
+
+                "showIcon": true, /* Show cookie icon to manage cookies */
+                "iconSrc": "{{ asset('uploads/img/cookie.png') }}", /* Optionnal: URL or base64 encoded image */
+                "iconPosition": "BottomRight", /* BottomRight, BottomLeft, TopRight and TopLeft */
+
+                "adblocker": false, /* Show a Warning if an adblocker is detected */
+
+                "DenyAllCta" : true, /* Show the deny all button */
+                "AcceptAllCta" : true, /* Show the accept all button when highPrivacy on */
+                "highPrivacy": true, /* HIGHLY RECOMMANDED Disable auto consent */
+                "alwaysNeedConsent": false, /* Ask the consent for "Privacy by design" services */
+
+                "handleBrowserDNTRequest": false, /* If Do Not Track == 1, disallow all */
+
+                "removeCredit": false, /* Remove credit link */
+                "moreInfoLink": true, /* Show more info link */
+
+                "useExternalCss": false, /* If false, the tarteaucitron.css file will be loaded */
+                "useExternalJs": false, /* If false, the tarteaucitron.js file will be loaded */
+
+                //"cookieDomain": ".my-multisite-domaine.fr", /* Shared cookie for multisite */
+
+                "readmoreLink": "", /* Change the default readmore link */
+
+                "mandatory": true, /* Show a message about mandatory cookies */
+                "mandatoryCta": true, /* Show the disabled accept button when mandatory on */
+
+                //"customCloserId": "", /* Optional a11y: Custom element ID used to open the panel */
+
+                "googleConsentMode": true, /* Enable Google Consent Mode v2 for Google ads and GA4 */
+
+                "partnersList": false /* Show the number of partners on the popup/middle banner */
+            });
+        </script>
+
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="author" content="Olivier Prieur (citizenJ)">
+        <link rel="profile" href="https://gmpg.org/xfn/11">
+        <title>{% block title %}{{ settings.siteName }} : {{ seoTitle|raw }}{% endblock %}</title>
+        <meta name="title" content="{{ seoTitle|raw }}">
+		<link rel="profile" href="https://gmpg.org/xfn/11">
+		<link rel="canonical" href="{{ settings.siteUrlfull }}/{{ seoUrl }}">
+		<meta name="description" content="{{ seoDescription|replace({'<div>': '', '</div>': '', '<p>': '', '</p>': ''})|raw }}">
+		<meta itemprop="name" content="{{ seoTitle|raw }}">
+        <meta itemprop="description" content="{{ seoDescription|raw }}">
+		<meta itemprop="url" content="{{ settings.siteUrlfull }}/{{ seoUrl }}">
+		<meta itemprop="image" content="{{ settings.siteUrlfull }}{{ asset('uploads/img/' ~ settings.siteLogo) }}">
+        <meta name="twitter:title" content="{{ seoTitle|raw }}">
+		<meta name="twitter:description" content="{{ seoDescription|replace({'<div>': '', '</div>': '', '<p>': '', '</p>': ''})|raw }}">
+		<meta name="twitter:card" content="summary">
+		<meta name="twitter:site" content="{{ settings.siteUrlfull }}/{{ seoUrl }}">
+		<meta name="twitter:image" content="{{ settings.siteUrlfull }}{{ asset('uploads/img/' ~ settings.siteLogo) }}">
+		<meta property="og:description" content="{{ seoDescription|replace({'<div>': '', '</div>': '', '<p>': '', '</p>': ''})|raw }}">
+		<meta property="og:title" content="{{ settings.siteName }}">
+		<meta property="og:image" content="{{ settings.siteUrlfull }}{{ asset('uploads/img/' ~ settings.siteLogo) }}">
+		<meta property="og:url" content="{{ settings.siteUrlfull }}/{{ seoUrl }}">
+		<meta property="og:site_name" content="{{ settings.siteName|raw }}">
+		<meta property="og:locale" content="fr_FR">
+		<meta property="og:type" content="website">
+
+        <link rel="icon" href="{{ asset('uploads/img/favicon/favicon.ico') }}">
+		<link rel="apple-touch-icon" sizes="57x57" href="{{ asset('uploads/img/favicon/apple-icon-57x57.png') }}">
+		<link rel="apple-touch-icon" sizes="60x60" href="{{ asset('uploads/img/favicon/apple-icon-60x60.png') }}">
+		<link rel="apple-touch-icon" sizes="72x72" href="{{ asset('uploads/img/favicon/apple-icon-72x72.png') }}">
+		<link rel="apple-touch-icon" sizes="76x76" href="{{ asset('uploads/img/favicon/apple-icon-76x76.png') }}">
+		<link rel="apple-touch-icon" sizes="114x114" href="{{ asset('uploads/img/favicon/apple-icon-114x114.png') }}">
+		<link rel="apple-touch-icon" sizes="120x120" href="{{ asset('uploads/img/favicon/apple-icon-120x120.png') }}">
+		<link rel="apple-touch-icon" sizes="144x144" href="{{ asset('uploads/img/favicon/apple-icon-144x144.png') }}">
+		<link rel="apple-touch-icon" sizes="152x152" href="{{ asset('uploads/img/favicon/apple-icon-152x152.png') }}">
+		<link rel="apple-touch-icon" sizes="180x180" href="{{ asset('uploads/img/favicon/apple-icon-180x180.png') }}">
+		<link rel="icon" type="image/png" sizes="192x192" href="{{ asset('uploads/img/favicon/android-icon-192x192.png') }}">
+		<link rel="icon" type="image/png" sizes="32x32" href="{{ asset('uploads/img/favicon/favicon-32x32.png') }}">
+		<link rel="icon" type="image/png" sizes="96x96" href="{{ asset('uploads/img/favicon/favicon-96x96.png') }}">
+		<link rel="icon" type="image/png" sizes="16x16" href="{{ asset('uploads/img/favicon/favicon-16x16.png') }}">
+		<link rel="manifest" href="{{ asset('uploads/img/favicon/manifest.json') }}">
+		<meta name="msapplication-TileColor" content="#ffffff">
+		<meta name="msapplication-TileImage" content="{{ asset('uploads/img/favicon/ms-icon-144x144.png') }}">
+		<meta name="theme-color" content="#ffffff">
+
+        <script type="application/ld+json">
+        {
+            "@context": "http://schema.org",
+            "@type": "Organization",
+            "name": "{{ settings.siteName }}",
+            "url": "{{ settings.siteUrlfull }}",
+            "logo": "{{ settings.siteUrlfull }}{{ asset('uploads/img/' ~ settings.siteLogo) }}",
+            "description": "{{ settings.siteFooterdescription }}",
+            "email": "{{ settings.siteEmail }}",
+            "image": "{{ settings.siteUrlfull }}{{ asset('uploads/img/' ~ settings.siteLogo) }}",
+            "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "{{ settings.siteAdresse }}",
+                "addressLocality": "{{ settings.siteVille }}",
+                "postalCode": "{{ settings.siteCp }}"
+            }
+        }
+        </script>
+
+        {% block stylesheets %}
+        {% endblock %}
+
+        {% block javascripts %}
+            {% block importmap %}{{ importmap('app') }}{% endblock %}
+        {% endblock %}
+    </head>
+    <body>
+        {% include "_includes/_header.html.twig" %}
+        {% block body %}{% endblock %}
+        {% include "_includes/_footer.html.twig" %}
+
+        {# Google fonts Tarteaucitron #}
+        <script type="text/javascript">
+            tarteaucitron.user.googleFonts = ['Poppins:100,200,300,400,500,600,700,800,900'];
+            (tarteaucitron.job = tarteaucitron.job || []).push('googlefonts');
+        </script>
+
+        {# Google Analytics Tarteaucitron #}
+        {#
+        <script type="text/javascript">
+            tarteaucitron.user.gtagUa = 'G-XXXXXXXX';
+            tarteaucitron.user.gtagMore = function () { /* add here your optionnal gtag() */ };
+            (tarteaucitron.job = tarteaucitron.job || []).push('gtag');
+        </script>
+        #}
+    </body>
+</html>

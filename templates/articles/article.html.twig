@@ -1,0 +1,160 @@
+{% extends 'base.html.twig' %}
+
+{# {% block title %}Article{% endblock %} #}
+
+{% block body %}
+	<div class="max-w-7xl mx-auto pt-32 pb-20 relative flex flex-wrap gap-6 md:gap-8 lg:gap-14">
+
+		{# Left column #}
+		<div class="w-full md:w-[73%] px-4">
+			<div
+				class="relative">
+				{# Retour à la liste des articles #}
+				<a href="{{ path('app_articles') }}" class="text-sm text-sky-600 hover:text-sky-800">
+					<i class="fa-solid fa-arrow-left"></i>
+					Retour à la liste des articles
+				</a>
+
+				{% for message in app.flashes('success') %}
+					<div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative my-6">
+						{{ message }}
+					</div>
+				{% endfor %}
+
+				{# Article #}
+				<img src="{{ asset('uploads/img/articles/' ~ article.imageFeatured) }}" alt="{{ article.title }}" class="h-[450px] w-full object-cover rounded-t-2xl shadow-lg mt-5">
+				<h1 class="text-2xl md:text-3xl font-bold text-sky-800 mt-4">{{ article.title }}</h1>
+				<div class="text-xs md:text-sm text-gray-500 mt-2 flex justify-between">
+					<span>
+						{# Author #}
+						<a href="#auteur">
+							<i class="fa-regular fa-user"></i>
+							{{ article.author.firstname }}
+							{{ article.author.lastname }}
+						</a>
+						|
+						{# Date #}
+						<i class="fa-regular fa-calendar-days"></i>
+						{{ article.createdAt|date('d/m/Y') }}
+						{% if article.updatedAt %}
+							|
+							<i class="fa-solid fa-calendar-check"></i>
+							{{ article.updatedAt|date('d/m/Y') }}
+						{% endif %}
+					</span>
+					<span>
+						{# Category #}
+						<span>
+							<a class="font-semibold hover:underline" style="color: {{ article.category.color }};" href="{{ path('app_category_show', {'slug': article.category.slug}) }}">
+								{{ article.category.title }}
+							</a>
+						</span>
+						|
+						{# Comments #}
+						<a href="#comments">
+							<i class="fa-regular fa-comment"></i>
+							{{ article.comments|length }}
+						</a> |
+						{# Views #}
+						<i class="fa-regular fa-eye"></i>
+						{{ article.views }}
+					</span>
+				</div>
+
+				{# Content #}
+				<div class="mt-8">
+					<p class="text-sm md:text-base">{{ article.content|replace({'<div>': '', '</div>': '',})|raw }}</p>
+				</div>
+
+				{# Auhtor bio #}
+				<div id="auteur" class="scroll-mt-24 mt-8 p-4 border border-gray-200 rounded-xl shadow-lg">
+					<img src="{{ asset('uploads/img/users/' ~ article.author.image) }}" alt="{{ article.author.firstname }} {{ article.author.lastname }}" class="w-12 h-12 object-cover rounded-full float-start mr-4">
+					<p class="text-sm text-gray-600 font-semibold">
+						{{ article.author.firstname }}
+						{{ article.author.lastname }}
+					</p>
+					<p class="text-sm text-gray-500">
+						{{ article.author.bio|raw|nl2br}}
+					</p>
+				</div>
+
+				{# Comments #}
+				<div class="mt-20 p-4 bg-gray-50 rounded-lg">
+					<h2 class="text-2xl text-gray-600 font-semibold mb-4">
+						Commentaires
+					</h2>
+
+					{# Comment form #}
+					<div class="mt-4">
+						{{ form_start(commentForm, { 'attr': { 'class': 'bg-white text-sm shadow-md rounded px-8 pt-6 pb-8 mb-4' } }) }}
+						<div class="flex justify-between gap-5">
+							{{ form_row(commentForm.nickname, { 'attr': { 'class': 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-3' } }) }}
+							{{ form_row(commentForm.email, { 'attr': { 'class': 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-3' } }) }}
+						</div>
+						{{ form_row(commentForm.content, { 'attr': { 'class': 'shadow appearance-none border rounded w-full h-40 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-3' } }) }}
+						<div class="flex justify-between items-center gap-4 border border-gray-200 p-4 rounded-lg">
+							<span class="text-xs text-gray-500 text-justify">En soumettant ce formulaire, j’accepte que ce site conserve mes données personnelles via ce formulaire. Aucune exploitation commerciale ne sera faite des données conservées.</span>
+							<span class="ml-6">{{ form_row(commentForm.rgpd) }}</span>
+						</div>
+						{{ form_row(commentForm.send, { 'attr': { 'class': 'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mt-4' } }) }}
+						{{ form_end(commentForm) }}
+					</div>
+
+					{# Comments list #}
+					<div id="comments" class="mt-4 pt-1 pb-4 scroll-mt-32">
+						{% if article.comments|filter(comment => comment.isActive == true)|length == 0 %}
+							<p class="text-base font-semibold text-center text-gray-600 my-8">Il n'y a actuellement aucun commentaire pour cet article</p>
+						{% else %}
+							<div class="mt-4 bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+								{% for comment in article.comments|filter(comment => comment.isActive == true) %}
+									<div id="comment-{{ comment.id }}" class="border-b border-gray-200 pb-4 mb-5 scroll-mt-32">
+										<div class="flex justify-between">
+											<h3 class="text-sm text-gray-700 font-semibold mb-2">
+												<i class="fa-regular fa-user"></i>
+												{{ comment.nickname }}
+											</h3>
+											<span class="text-xs text-gray-600">
+												<i class="fa-regular fa-calendar-days"></i>
+												{{ comment.createdAt|date('d/m/Y, H:i') }}
+											</span>
+										</div>
+										<p class="text-sm text-gray-600">
+											{{ comment.content|nl2br }}
+										</p>
+									</div>
+								{% endfor %}
+							</div>
+						{% endif %}
+					</div>
+				</div>
+			</div>
+		</div>
+
+		{# Right column #}
+		<div class="w-full md:w-[22%] flex flex-col gap-4 md:gap-8 px-4">
+			<h2 class="text-2xl text-gray-400 font-semibold">A la une</h2>
+
+			{% for art in articlesFeatured %}
+				<div class="border-b border-gray-200 pb-4">
+					<h3 class="text-sm text-gray-700 font-semibold mb-2">
+						{{ art.title }}
+					</h3>
+					<a href="{{ path('app_article', {'slug': art.slug}) }}" class="text-sm text-gray-700 hover:text-orange-500">Lire l'article</a>
+					<i class="fa-solid fa-arrow-right ml-2 animate-bounce"></i>
+				</div>
+			{% endfor %}
+
+			<h2 class="text-2xl text-gray-400 font-semibold mt-12">Les plus lus</h2>
+
+			{% for artv in articlesMostViews %}
+				<div class="border-b border-gray-200 pb-4">
+					<h3 class="text-sm text-gray-700 font-semibold mb-2">
+						{{ artv.title }}
+					</h3>
+					<a href="{{ path('app_article', {'slug': artv.slug}) }}" class="text-sm text-gray-700 hover:text-orange-500">Lire l'article</a>
+					<i class="fa-solid fa-arrow-right ml-2 animate-bounce"></i>
+				</div>
+			{% endfor %}
+		</div>
+	</div>
+{% endblock %}

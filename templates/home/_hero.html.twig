@@ -1,0 +1,15 @@
+<div class="relative w-full bg-gray-900/90 text-white mt-[75px] px-4 md:px-8 py-16 md:py-32 flex flex-col items-center justify-center">
+    <h1 class="text-3xl md:text-6xl font-bold mb-2 md:mb-4 text-center">{{ homePage.mainTitle }}</h1>
+
+    <div class="max-w-4xl text-center">
+        <p class="text-base md:text-lg font-semibold mt-4">
+            {{ homePage.subtitle }}
+        </p>
+        <p class="mt-8">
+            <a class="hover:border border-orange-600 py-2 px-4 rounded" href="{{ homePage.mainLinkUrl }}">
+                {{ homePage.mainLinkText }}
+                <i class="fa-solid fa-arrow-right ml-2 animate-bounce"></i>
+            </a>
+        </p>
+    </div>
+</div>

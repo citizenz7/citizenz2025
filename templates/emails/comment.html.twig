@@ -1,0 +1,22 @@
+<h1 style="font-size: 16px; font-weight: bold;">Nouveau commentaire sur l'article {{ article.title }}</h1>
+
+<div style="margin: 15px 0;">
+    L'utilisateur {{ comment.nickname }} ({{ comment.email }}) a ajouté le commentaire suivant le {{ comment.createdAt|date('d/m/Y H:i:s') }} :<br>
+    <div style="background-color: #f1f1f1; padding: 10px; font-size: 14px; border-radius: 5px;">{{ comment.content }}</div>
+</div>
+
+<p>
+    Vous pouvez consulter l'article en cliquant sur le lien suivant : 
+    <a href="{{ settings.siteUrlfull }}{{ url('app_article', { slug: article.slug }) }}">
+        {{ article.title }}
+    </a>
+</p>
+
+<p style="font-weight: bold;">
+    <span style="color: #ea580c;">/!\</span> N'oubliez pas de valider ou supprimer l'article depuis le dashboard.
+</p>
+
+<p>
+    Cordialement,<br>
+    CitizenZ
+</p>

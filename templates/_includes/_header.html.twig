@@ -1,0 +1,69 @@
+<header class="bg-gray-900/80 h-[75px] py-4 w-full z-50 fixed top-0 left-0 right-0">
+    <nav class="max-w-7xl mx-auto flex justify-between items-center xl:px-0 px-4 pb-4">
+        <a class="text-3xl text-white font-bold" href="{{ path('app_home') }}">
+            {{ settings.siteName }}<span class="text-orange-600 text-4xl font-extrabold">Z</span>
+        </a>
+
+        {# Burger mobile #}
+        <div class="md:hidden">
+            <i id="menu-toggle" class="fa-solid fa-bars text-3xl text-white cursor-pointer"></i>
+        </div>
+
+        {# Desktop menu #}
+        <ul class="hidden md:flex list-none text-base font-bold text-white gap-7">
+            <li>
+                <a {% if page_title == 'Home' %}class="text-orange-600 underline hover:text-blue-600"{% endif %} href="{{ path('app_home') }}">Accueil</a>
+            </li>
+            <li>
+                <a {% if page_title == 'Blog' or page_title == 'Article' %}class="text-orange-600 underline hover:text-blue-600"{% endif %} href="{{ path('app_articles') }}">Tous les articles</a>
+            </li>
+            <li>
+                <a {% if page_title == 'Apropos' %}class="text-orange-600 underline hover:text-blue-600"{% endif %} href="{{ path('app_apropos') }}">A propos</a>
+            </li>
+            <li>
+                <a {% if page_title == 'Contact' %}class="text-orange-600 underline hover:text-blue-600"{% endif %} href="{{ path('app_contact') }}">Contact</a>
+            </li>
+        </ul>
+
+        <ul class="hidden md:flex list-none font-bold text-white gap-7">
+            <span class="hidden lg:flex gap-4 items-center">
+                <li>
+                    <a href="{{ path('app_search') }}" class="hover:text-orange-600 text-xl">
+                        {# Search #}
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </a>
+                </li>
+                {% for soc in socials %}
+                    <li>
+                        <a href="{{ soc.url }}" class="hover:text-orange-600 text-xl">
+                            {{ soc.icon|raw }}
+                        </a>
+                    </li>
+                {% endfor %}
+            </span>
+
+            {% if app.user and is_granted('ROLE_ADMIN') %}
+                <li>
+                    <a class="bg-lime-600 hover:bg-blue-600 py-2 px-4 rounded text-sm" href="{{ path('admin') }}">Dashboard</a>
+                </li>
+                <li>
+                    <a class="bg-orange-600 hover:bg-blue-600 py-2 px-4 rounded text-sm" href="{{ path('app_logout') }}">Deconnexion</a>
+                </li>
+            {% else %}
+                <li>
+                    <a class="bg-orange-600 hover:bg-blue-600 py-2 px-4 rounded text-sm" href="{{ path('app_login') }}">Connexion</a>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
+
+    {# Mobile menu (hidden by default) #}
+    <div id="mobile-menu" class="z-50 fixed top-0 left-0 w-full h-full bg-black flex flex-col items-center justify-center gap-8 text-white text-xl font-bold transform -translate-x-full transition-transform duration-700 md:hidden">
+        <i id="menu-close" class="fa-solid fa-times text-4xl cursor-pointer absolute top-5 right-5"></i>
+        <a href="{{ path('app_home') }}">Accueil</a>
+        <a href="#">Blog</a>
+        <a href="#">A propos</a>
+        <a href="#">Contact</a>
+        <a class="bg-orange-600 hover:bg-blue-600 py-2 px-4 rounded text-sm" href="#">Connexion</a>
+    </div>
+</header>

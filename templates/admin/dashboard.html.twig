@@ -1,0 +1,93 @@
+{% extends '@!EasyAdmin/layout.html.twig' %}
+
+{% block main %}
+
+	{# {{ dump() }} #}
+
+	<div class="container-fluid mb-5">
+		<div class="row">
+			<div class="col border rounded text-center pt-2">
+				<h1 class="fw-bold h2">Tableau de Bord</h1>
+				<p>Depuis le menu de gauche, vous pouvez administrer et gérer toutes les sections du site.</p>
+			</div>
+		</div>
+	</div>
+
+	<div class="container-fluid mb-5">
+		<div class="row row-cols-1 row-cols-md-5 g-4 justify-content-center align-items-center">
+			<div class="col">
+				<div class="card h-100 dashboard-card-bg">
+					<div class="card-body">
+						<h2 class="h5 fw-bold card-title text-center text-white">Utilisateurs</h2>
+                        <h3 class="card-text text-center text-white"><strong>{{ users|length }}</strong></h3>
+					</div>
+				</div>
+			</div>
+			<div class="col">
+				<div class="card h-100 dashboard-card-bg">
+					<div class="card-body">
+						<h2 class="h5 fw-bold card-title text-center text-white">Articles</h2>
+                        <h3 class="card-text text-center text-white"><strong>{{ articles|length }}</strong></h3>
+					</div>
+				</div>
+			</div>
+			<div class="col">
+				<div class="card h-100 dashboard-card-bg">
+					<div class="card-body">
+						<h5 class="card-title text-center text-white">Catégories</h5>
+                        <h3 class="card-text text-center text-white"><strong>{{ categories|length }}</strong></h3>
+					</div>
+				</div>
+			</div>
+			<div class="col">
+				<div class="card h-100 dashboard-card-bg">
+					<div class="card-body">
+						<h5 class="card-title text-center text-white">E-mail blacklistées</h5>
+                        <h3 class="card-text text-center text-white"><strong>{{ blacklists|length }}</strong></h3>
+					</div>
+				</div>
+			</div>
+            <div class="col">
+                <div class="card h-100 dashboard-card-bg">
+                    <div class="card-body">
+                        <h5 class="card-title text-center text-white">Réseaux sociaux</h5>
+                        <h3 class="card-text text-center text-white"><strong>{{ socials|length }}</strong></h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100 dashboard-card-bg">
+                    <div class="card-body">
+                        <h5 class="card-title text-center text-white">Médias</h5>
+                        <h3 class="card-text text-center text-white"><strong>{{ medias|length }}</strong></h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100 dashboard-card-bg">
+                    <div class="card-body">
+                        <h5 class="card-title text-center text-white">Commentaires</h5>
+                        <h3 class="card-text text-center text-white"><strong>{{ comments|length }}</strong></h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100 dashboard-card-bg">
+                    <div class="card-body">
+                        <h5 class="card-title text-center text-white">Citations</h5>
+                        <h3 class="card-text text-center text-white"><strong>{{ citations|length }}</strong></h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100 dashboard-card-bg">
+                    <div class="card-body">
+                        <h5 class="card-title text-center text-white">Liens web</h5>
+                        <h3 class="card-text text-center text-white"><strong>{{ links|length }}</strong></h3>
+                    </div>
+                </div>
+            </div>
+		</div>
+	</div>
+
+{% endblock %}

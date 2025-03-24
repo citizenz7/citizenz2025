@@ -1,0 +1,60 @@
+<?php
+
+namespace App\Controller;
+
+use App\Repository\ArticleRepository;
+use App\Repository\CategoryRepository;
+use App\Repository\CitationRepository;
+use App\Repository\CommentRepository;
+use App\Repository\HomePageRepository;
+use App\Repository\SettingRepository;
+use App\Repository\SocialRepository;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
+
+final class HomeController extends AbstractController
+{
+    #[Route('/', name: 'app_home')]
+    public function index(
+        SettingRepository $settingRepository,
+        CategoryRepository $categoryRepository,
+        ArticleRepository $articleRepository,
+        HomePageRepository $homePageRepository,
+        CommentRepository $commentRepository,
+        SocialRepository $socialRepository,
+        CitationRepository $citationRepository
+    ): Response
+    {
+        $settings = $settingRepository->findOneBy([]);
+        $categories = $categoryRepository->findBy(["isActive" => true], ['title' => 'ASC']);
+        $articles = $articleRepository->findBy(['isActive' => true], ['createdAt' => 'DESC'], 6);
+        $comments = $commentRepository->findBy(['isActive' => true], ['createdAt' => 'DESC'], 5);
+        $homePage = $homePageRepository->findOneBy([]);
+        $socials = $socialRepository->findBy(['isActive' => true], ['id' => 'ASC']);
+
+        $citation = $citationRepository->findRandom();
+
+        // Articles features and active
+        $articlesFeatured = $articleRepository->findBy(['isFeatured' => true, 'isActive' => true], ['createdAt' => 'DESC'], 4);
+
+        // Articles most views and active
+        $articlesMostViews = $articleRepository->findBy(['isActive' => true], ['views' => 'DESC'], 4);
+
+        return $this->render('home/index.html.twig', [
+            'settings' => $settings,
+            'categories' => $categories,
+            'articles' => $articles,
+            'articlesFeatured' => $articlesFeatured,
+            'articlesMostViews' => $articlesMostViews,
+            'comments' => $comments,
+            'homePage' => $homePage,
+            'socials' => $socials,
+            'citation' => $citation,
+            'page_title' => 'Home',
+            'seoTitle' => $homePage->getSeoTitle(),
+            'seoDescription' => $homePage->getSeoDescription(),
+            'seoUrl' => ''
+        ]);
+    }
+}
