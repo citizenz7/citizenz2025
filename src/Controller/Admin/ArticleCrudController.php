@@ -36,22 +36,27 @@ class ArticleCrudController extends AbstractCrudController
             // IdField::new('id'),
             BooleanField::new('isActive', 'Actif'),
             BooleanField::new('isFeatured', 'En vedette'),
+            IntegerField::new('views', 'Vues')
+                ->setcolumns(2),
             TextField::new('title', 'Titre')
-                ->setColumns(6),
+                ->setColumns(5),
             SlugField::new('slug', 'Slug')
                 ->setTargetFieldName('title')
                 ->hideOnIndex()
-                ->setColumns(6),
+                ->setColumns(5),
             AssociationField::new('category', 'Catégorie de l\'article')
                 ->setHelp('Choisissez une catégorie pour l\'article.')
                 ->setRequired(true)
-                ->setColumns(6),
+                ->setColumns(4),
             AssociationField::new('author', 'Auteur')
-                ->setColumns(3)
+                ->setColumns(2)
                 ->onlyOnForms()
                 ->onlyWhenUpdating(),
             AssociationField::new('author', 'Auteur')
                 ->onlyOnIndex(),
+            AssociationField::new('tags', 'Tags')
+                ->setHelp('Choisissez des tags pour l\'article.')
+                ->setColumns(6),
 
             FormField::addTab('Textes'),
             TextEditorField::new('intro', 'Introduction')
@@ -94,9 +99,6 @@ class ArticleCrudController extends AbstractCrudController
                 ->hideOnIndex()
                 ->setEntryIsComplex(true)
                 ->useEntryCrudForm(MediaCrudController::class),
-
-            IntegerField::new('views', 'Vues')
-                ->onlyOnIndex(),
             DateField::new('createdAt', 'Création')
                 ->hideOnForm()
                 ->setColumns(2),
@@ -128,7 +130,7 @@ class ArticleCrudController extends AbstractCrudController
             ->setEntityLabelInPlural('Articles')
             ->setEntityLabelInSingular('Article')
             ->showEntityActionsInlined(true)
-            ->setPaginatorPageSize(12);
+            ->setPaginatorPageSize(10);
     }
 
     public function configureActions(Actions $actions): Actions{

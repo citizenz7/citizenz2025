@@ -10,6 +10,7 @@ use App\Repository\CommentRepository;
 use App\Repository\SettingRepository;
 use App\Repository\CategoryRepository;
 use App\Repository\CitationRepository;
+use App\Repository\TagRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
@@ -98,6 +99,7 @@ final class ArticleController extends AbstractController
         CategoryRepository $categoryRepository,
         ArticleRepository $articleRepository,
         CommentRepository $commentRepository,
+        TagRepository $tagRepository,
         EntityManagerInterface $em,
         Request $request,
         MailerInterface $mailer,
@@ -109,6 +111,7 @@ final class ArticleController extends AbstractController
         $settings = $settingRepository->findOneBy([]);
         $article = $articleRepository->findOneBy(['slug' => $slug, 'isActive' => true]);
         $comments = $commentRepository->findBy(['isActive' => true], ['createdAt' => 'DESC'], 5);
+        $tags = $tagRepository->findBy(['isActive' => true], ['title' => 'ASC']);
         $categories = $categoryRepository->findBy(["isActive" => true], ['title' => 'ASC']);
         $socials = $socialRepository->findBy(['isActive' => true], ['id' => 'ASC']);
 
@@ -172,6 +175,7 @@ final class ArticleController extends AbstractController
             'settings' => $settings,
             'comments' => $comments,
             'categories' => $categories,
+            'tags' => $tags,
             'articlesFeatured' => $articlesFeatured,
             'articlesMostViews' => $articlesMostViews,
             'commentForm' => $commentForm,

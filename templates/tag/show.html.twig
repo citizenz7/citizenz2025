@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tag{% endblock %}
+
+{% block body %}
+        <div class="max-w-7xl mx-auto py-32">
+            <h1 class="mb-4 text-4xl tracking-tight font-extrabold text-center text-gray-900 dark:text-white">{{ tag.title }}</h1>
+            <div class="w-full md:w-[73%] mx-auto flex justify-between flex-wrap gap-4 lg:gap-6 px-4">
+                {% for article in tag.articles %}
+                    <h2 class="text-xl text-gray-600 font-semibold mb-2">
+                        <a href="{{ path('app_article', {'slug': article.slug}) }}">{{ article.title }} <i class="fa-solid fa-square-up-right text-orange-600"></i></a>
+                    </h2>
+                    <p class="text-gray-400 text-xs">{{ article.createdAt|date('d/m/Y') }}</p>
+                {% endfor %}
+            </div>
+        </div>
+{% endblock %}

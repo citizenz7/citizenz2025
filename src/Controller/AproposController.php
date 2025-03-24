@@ -29,7 +29,6 @@ final class AproposController extends AbstractController
         $comments = $commentRepository->findBy(['isActive' => true], ['createdAt' => 'DESC'], 5);
         $socials = $socialRepository->findBy(['isActive' => true], ['id' => 'ASC']);
         $aproposPage = $aproposPageRepository->findOneBy([]);
-
         $citation = $citationRepository->findRandom();
 
         return $this->render('apropos/index.html.twig', [
