@@ -44,12 +44,13 @@
         </div>
     </div>
     <div class="max-w-7xl mx-auto py-6 px-4 xl:px-0 flex flex-col-reverse md:flex-row justify-between items-center">
-        <div class="text-xs md:text-sm flex items-center">
+        <div class="text-xs md:text-xs/3 flex items-center">
             CitizenJ &bullet;
             <a href="https://www.gnu.org/licenses/gpl-3.0.fr.html" title="Licence GNU GPL v3" target="_blank" class="mx-1 hover:text-orange-600">
                 GPL v3
             </a> &bullet;
-            {{ "now"|date("Y") }} &bull; Certains droits reservés
+            {{ "now"|date("Y") }} &bull; Certains droits reservés &bullet;
+            Images&nbsp;<a href="https://pixabay.com/fr/" class="hover:text-orange-600" target="_blank">Pixabay</a>
         </div>
         <ul class="text-xs md:text-sm flex gap-4 md:gap-5 mb-4 md:mb-0">
             {% for social in socials %}
