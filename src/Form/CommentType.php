@@ -20,15 +20,15 @@ class CommentType extends AbstractType
     {
         $builder
             ->add('nickname', TextType::class, [
-                'label' => 'Votre Pseudo',
+                'label' => 'Pseudo',
                 'required' => true
             ])
             ->add('email', EmailType::class, [
-                'label' => 'Votre adresse E-mail',
+                'label' => 'E-mail',
                 'required' => true
             ])
             ->add('content', TextareaType::class, [
-                'label' => 'Votre Commentaire',
+                'label' => 'Commentaire',
                 'required' => true
             ])
             // ->add('createdAt', null, [
