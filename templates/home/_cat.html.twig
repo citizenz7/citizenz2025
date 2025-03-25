@@ -5,8 +5,8 @@
                 <a href="{{ path('app_category_show', {'slug': cat.slug}) }}" class="font-semibold text-sm md:text-base" style="color: {{ cat.color}};">{{ cat.title }}</a>
             </li>
         {% endfor %}
-        <li>
+        {# <li>
             <a class="text-orange-600 font-semibold text-sm md:text-base" href="{{ path('app_category_index') }}">Toutes les catégories</a>
-        </li>
+        </li> #}
     </ul>
 </div>

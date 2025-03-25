@@ -24,11 +24,11 @@ class SocialCrudController extends AbstractCrudController
         return [
             // IdField::new('id'),
             BooleanField::new('isActive', 'Actif'),
-            TextField::new('title', 'Title')
+            TextField::new('title', 'Titre')
                 ->setColumns(6),
             TextField::new('url', 'Url')
                 ->setColumns(6),
-            TextField::new('icon', 'Icon')
+            TextField::new('icon', 'Icône Font Awesome')
                 ->setHelp('Icône Font Awesome')
                 ->setColumns(4),
         ];

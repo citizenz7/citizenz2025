@@ -72,7 +72,7 @@
 
 				{# Content #}
 				<div class="mt-8">
-					<p class="text-sm md:text-base">{{ article.content|replace({'<div>': '', '</div>': '',})|raw }}</p>
+					<p class="text-sm md:text-base text-wrap">{{ article.content|replace({'<div>': '', '</div>': '', '<p>': '', '</p>': ''})|raw }}</p>
 				</div>
 
 				{# Auhtor bio #}

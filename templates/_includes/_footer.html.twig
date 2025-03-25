@@ -4,11 +4,11 @@
             <h3 class="font-bold text-2xl lg:text-3xl xl:text-4xl mb-4">
                 Citizen<span class="text-orange-600 font-extrabold">Z</span>
             </h3>
-            <p class="text-xs md:text-xs/5 text-justify">{{ settings.siteFooterdescription|raw|nl2br }}</p>
+            <p class="text-xs md:text-xs/6 text-justify">{{ settings.siteFooterdescription|raw|nl2br }}</p>
         </div>
         <div class="w-full text-center md:text-left lg:w-[15%]">
             <h3 class="font-bold text-lg md:text-xl mb-4">Menu</h3>
-            <ul class="list-none text-xs/7 md:text-sm/7">
+            <ul class="list-none text-xs/6 md:text-xs/8">
                 <li><i class="fa-solid fa-square-caret-right mr-2"></i><a class="text-gray-400 hover:text-orange-600" href="{{ path('app_home') }}">Accueil</a></li>
                 <li><i class="fa-solid fa-square-caret-right mr-2"></i><a class="text-gray-400 hover:text-orange-600" href="{{ path('app_articles') }}">Tous les articles</a></li>
                 <li><i class="fa-solid fa-square-caret-right mr-2"></i><a class="text-gray-400 hover:text-orange-600" href="{{ path('app_category_index') }}">Toutes les catégories</a></li>
@@ -20,15 +20,18 @@
         </div>
         <div class="w-full  text-center md:text-left lg:w-[15%]">
             <h3 class="font-bold text-lg md:text-xl mb-4">Catégories</h3>
-            <ul class="list-none text-xs/7 md:text-sm/7">
+            <ul class="list-none text-xs/6 md:text-xs/8">
                 {% for category in categories %}
-                    <li><i class="fa-solid fa-chevron-right mr-2"></i><a class="text-gray-400 hover:text-orange-600" href="{{ path('app_category_show', {'slug': category.slug}) }}">{{ category.title }}</a></li>
+                    {# si la catégorie à des articles #}
+                    {% if category.articles|length > 0 %}
+                        <li><i class="fa-solid fa-caret-right mr-2"></i><a class="text-gray-400 hover:text-orange-600" href="{{ path('app_category_show', {'slug': category.slug}) }}">{{ category.title }}</a></li>
+                    {% endif %}
                 {% endfor %}
             </ul>
         </div>
         <div class="w-full text-center md:text-left lg:w-[28%]">
             <h3 class="font-bold text-lg md:text-xl mb-4">Derniers commentaires</h3>
-            <ul class="list-none text-xs/7 md:text-xs/7">
+            <ul class="list-none text-xs/6 md:text-xs/8">
                 {% for comment in comments %}
                     <li>
                         <i class="fa-solid fa-caret-right mr-2"></i>

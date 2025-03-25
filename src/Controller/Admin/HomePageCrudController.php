@@ -5,10 +5,12 @@ namespace App\Controller\Admin;
 use App\Entity\HomePage;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
+use Symfony\Component\Validator\Constraints\Image;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\SlugField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
@@ -33,6 +35,22 @@ class HomePageCrudController extends AbstractCrudController
                 ->setTargetFieldName('mainTitle'),
             TextField::new('subtitle', 'Sous-titre')
                 ->setColumns(6),
+            ImageField::new('heroImage', 'Image de couverture')
+                ->setColumns(6)
+                ->setRequired(false)
+                ->setBasePath('uploads/img/pages')
+                ->setUploadDir('public/uploads/img/pages')
+                ->setUploadedFileNamePattern('[name]-[uuid].[extension]')
+                ->setFileConstraints(new Image(
+                    maxWidth: 1920,
+                    maxWidthMessage: 'L\'image est trop large. La largeur max est 1900 px.',
+                    maxHeight: 1080,
+                    maxHeightMessage: 'L\'image est trop grande. La hauteur max est 1080 px.',
+                    maxSize: '500k',
+                    maxSizeMessage: 'L\'image est trop volumineuse. Le poids max est 500 Ko.',
+                    mimeTypes: ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'],
+                    mimeTypesMessage: 'Seuls les formats jpeg, jpg, png, webp sont acceptés.'
+                )),
             TextField::new('mainLinkText', 'Bouton')
                 ->setColumns(6),
             TextField::new('mainLinkUrl', 'URL du bouton')

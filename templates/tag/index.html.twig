@@ -5,18 +5,21 @@
 {% block body %}
     <div class="max-w-7xl mx-auto py-32">
         <h1 class="mb-4 text-4xl tracking-tight font-extrabold text-center text-gray-900 dark:text-white">Tous les tags</h1>
-        <div class="max-w-3xl mx-auto mt-16 flex flex-col gap-8">
-            <div class="flex justify-between items-center">
-                <h2 class="font-bold text-base md:text-xl bg-slate-300 px-4 py-2 w-full">Tags</h2>
-                <span class="font-bold text-base md:text-lg text-gray-600 bg-slate-300 px-4 py-2 w-full text-end">nb d'articles</span>
+        <div class="max-w-3xl mx-auto mt-12 flex flex-col gap-8">
+            <div class="flex justify-between items-center bg-black text-white">
+                <h2 class="font-bold text-base md:text-xl px-4 py-2 w-full">Tags</h2>
+                <span class="font-bold text-base md:text-lg px-4 py-2 w-full text-end">nb d'articles</span>
             </div>
             {% for tag in tags %}
-                <div class="flex justify-between items-center px-4">
-                    <a href="{{ path('app_tag_show', {'slug': tag.slug}) }}" class="font-medium text-base md:text-xl bg-slate-100 px-4 py-2 w-full">
-                        #{{ tag.title }}
-                    </a>
-                    <span class="font-bold text-base md:text-lg text-gray-600 bg-slate-100 px-4 py-2 w-full text-end">{{ tag.articles|length }}</span>
-                </div>
+                {# si le tag possède des articles... #}
+                {% if tag.articles is not empty %}
+                    <div class="flex justify-between items-center">
+                        <a href="{{ path('app_tag_show', {'slug': tag.slug}) }}" class="font-medium text-base md:text-xl bg-slate-100 px-4 py-2 w-full hover:underline">
+                            #{{ tag.title }} <i class="fa-solid fa-square-up-right text-orange-600"></i>
+                        </a>
+                        <span class="font-bold text-base md:text-lg text-gray-600 bg-slate-100 px-4 py-2 w-full text-end">{{ tag.articles|length }}</span>
+                    </div>
+                {% endif %}
             {% endfor %}
         </div>
     </div>

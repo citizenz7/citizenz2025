@@ -35,6 +35,9 @@ class HomePage
     #[ORM\Column(length: 255)]
     private ?string $slug = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $heroImage = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -120,6 +123,18 @@ class HomePage
     public function setSlug(string $slug): static
     {
         $this->slug = $slug;
+
+        return $this;
+    }
+
+    public function getHeroImage(): ?string
+    {
+        return $this->heroImage;
+    }
+
+    public function setHeroImage(string $heroImage): static
+    {
+        $this->heroImage = $heroImage;
 
         return $this;
     }

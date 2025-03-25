@@ -9,7 +9,7 @@
         <div class="flex flex-wrap gap-4 mt-8">
             {% if category.articles|length > 0 %}
                 {# Tous les articles de la catégorie #}
-                {% for article in category.articles %}
+                {% for article in category.articles|reverse %}
                     <div class="w-full p-6 sm:w-[47%] shadow-lg hover:shadow-2xl transition-shadow duration-300 ease-in-out cursor-pointer mb-4 relative">
                         <a href="{{ path('app_article', {'slug': article.slug}) }}">
                             <img src="{{ asset('uploads/img/articles/' ~ article.imageFeatured) }}" alt="{{ article.title }}" class="w-full h-48 object-cover rounded relative">
