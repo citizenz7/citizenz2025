@@ -12,6 +12,7 @@
         "doctrine/doctrine-migrations-bundle": "^3.4.1",
         "doctrine/orm": "^3.3.2",
         "easycorp/easyadmin-bundle": "^4.24.5",
+        "friendsofsymfony/ckeditor-bundle": "^2.6",
         "karser/karser-recaptcha3-bundle": "^0.2.1",
         "knplabs/knp-paginator-bundle": "^6.7",
         "knplabs/knp-time-bundle": "^2.4",
@@ -84,7 +85,8 @@
         "auto-scripts": {
             "cache:clear": "symfony-cmd",
             "assets:install %PUBLIC_DIR%": "symfony-cmd",
-            "importmap:install": "symfony-cmd"
+            "importmap:install": "symfony-cmd",
+            "ckeditor:install --tag=4.22.1": "symfony-cmd"
         },
         "post-install-cmd": [
             "@auto-scripts"

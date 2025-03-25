@@ -4,6 +4,14 @@ body {
   font-family: "Poppins", sans-serif;
 }
 
+code, pre {
+  padding: 2px 4px;
+  border-radius: 4px;
+  color: #c7254e;
+  font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
+    Bitstream Vera Sans Mono, Courier New, monospace;
+}
+
 @media (max-width: 478px) {
   .video-container {
     position: relative;

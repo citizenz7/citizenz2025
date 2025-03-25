@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Article;
 use App\Controller\Admin\MediaCrudController;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
@@ -69,7 +70,9 @@ class ArticleCrudController extends AbstractCrudController
             TextEditorField::new('content', 'Contenu')
                 ->setColumns(12)
                 ->hideOnIndex()
-                ->hideOnDetail(),
+                ->hideOnDetail()
+                ->setFormType(CKEditorType::class)
+                ->setFormTypeOption('config', ['height' => '500px']),
             TextareaField::new('content', 'Contenu')
                 ->hideOnForm()
                 ->hideOnIndex()
@@ -129,6 +132,7 @@ class ArticleCrudController extends AbstractCrudController
             ->setDefaultSort(['id' => 'DESC'])
             ->setEntityLabelInPlural('Articles')
             ->setEntityLabelInSingular('Article')
+            ->addFormTheme('@FOSCKEditor/Form/ckeditor_widget.html.twig')
             ->showEntityActionsInlined(true)
             ->setPaginatorPageSize(10);
     }
