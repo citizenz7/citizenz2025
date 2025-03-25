@@ -33,26 +33,3 @@ symfony console tailwind:build --watch
 `php bin/console tailwind:build --minify`
 
 `php bin/console asset-map:compile`
-
-### A FAIRE / VERIFIER AVANT LA MISE EN PROD
-* ~~page login CSS~~
-* ~~Erreurs personnalisées~~
-* ~~Recherche~~
-* ~~Sitemap~~
-* ~~reCaptcha Google~~
-* ~~test formulaire de contact~~
-* ~~flash messages~~
-* ~~BO css~~
-* ~~robots.txt~~
-* ~~Favicon~~
-* ~~Meta + données structurées schema.org~~
-* ~~Tarteaucitron~~
-* ~~div dans les crudcontroller ADMIN~~
-* ~~Responsive~~
-* ~~SEO :
-    * titre H1 de chaque page
-    * vérifier les balise HTML de titre sur chaque page : h1 (une seule par page) puis h2, h3, ...
-    * vérifier les img alt=""~~
-* ~~CGU~~
-* ~~constraints dans crud controller sur images et fichiers~~
-* ~~Mentions légales~~
