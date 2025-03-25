@@ -6,7 +6,7 @@
         <div class="max-w-7xl mx-auto py-32">
             <h1 class="mb-12 text-4xl tracking-tight font-extrabold text-center text-gray-900 dark:text-white">{{ tag.title }}</h1>
             {% for article in tag.articles %}
-                <div class="w-full mt-5 pb-2 border-b border-gray-200">
+                <div class="w-full mt-5 pb-2 px-4 xl:px-0 border-b border-gray-200">
                     <h2 class="text-xl text-gray-600 font-semibold">
                         <a href="{{ path('app_article', {'slug': article.slug}) }}">{{ article.title }} <i class="fa-solid fa-square-up-right text-orange-600"></i></a>
                     </h2>
