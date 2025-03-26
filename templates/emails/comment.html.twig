@@ -6,8 +6,8 @@
 </div>
 
 <p>
-    Vous pouvez consulter l'article en cliquant sur le lien suivant : 
-    <a href="{{ settings.siteUrlfull }}{{ url('app_article', { slug: article.slug }) }}">
+    Vous pouvez consulter l'article en cliquant sur le lien suivant :
+    <a href="{{ settings.siteUrlfull }}{{ path('app_article', { slug: article.slug }) }}">
         {{ article.title }}
     </a>
 </p>
