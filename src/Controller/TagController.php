@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Tag;
 use App\Form\TagType;
 use App\Repository\TagRepository;
+use App\Repository\LinkRepository;
 use App\Repository\SocialRepository;
 use App\Repository\CommentRepository;
 use App\Repository\SettingRepository;
@@ -26,13 +27,15 @@ final class TagController extends AbstractController
         CommentRepository $commentRepository,
         SocialRepository $socialRepository,
         CitationRepository $citationRepository,
-        TagRepository $tagRepository
+        TagRepository $tagRepository,
+        LinkRepository $linkRepository
     ): Response {
         $tags = $tagRepository->findAll();
         $settings = $settingRepository->findOneBy([]);
         $categories = $categoryRepository->findBy(["isActive" => true], ['title' => 'ASC']);
         $comments = $commentRepository->findBy(['isActive' => true], ['createdAt' => 'DESC'], 5);
         $socials = $socialRepository->findBy(['isActive' => true], ['id' => 'ASC']);
+        $links = $linkRepository->findBy(['isActive' => true], []);
         $citation = $citationRepository->findRandom();
 
         return $this->render('tag/index.html.twig', [
@@ -41,6 +44,7 @@ final class TagController extends AbstractController
             'comments' => $comments,
             'socials' => $socials,
             'citation' => $citation,
+            'links' => $links,
             'tags' => $tags,
             'page_title' => 'Liste des Tags',
             'seoTitle' => 'Liste des Tags',
@@ -78,6 +82,7 @@ final class TagController extends AbstractController
         SocialRepository $socialRepository,
         CitationRepository $citationRepository,
         TagRepository $tagRepository,
+        LinkRepository $linkRepository,
         string $slug
     ): Response {
         $settings = $settingRepository->findOneBy([]);
@@ -85,6 +90,7 @@ final class TagController extends AbstractController
         $comments = $commentRepository->findBy(['isActive' => true], ['createdAt' => 'DESC'], 5);
         $socials = $socialRepository->findBy(['isActive' => true], ['id' => 'ASC']);
         $citation = $citationRepository->findRandom();
+        $links = $linkRepository->findBy(['isActive' => true], []);
 
         $tag = $tagRepository->findOneBy(['slug' => $slug]);
 
@@ -94,6 +100,7 @@ final class TagController extends AbstractController
             'comments' => $comments,
             'socials' => $socials,
             'citation' => $citation,
+            'links' => $links,
             'page_title' => $tag->getTitle(),
             'seoTitle' => html_entity_decode($tag->getTitle()),
             'seoDescription' => html_entity_decode($tag->getTitle()),

@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\LinkRepository;
 use App\Repository\SocialRepository;
 use App\Repository\CommentRepository;
 use App\Repository\SettingRepository;
@@ -21,7 +22,8 @@ final class AproposController extends AbstractController
         AproposPageRepository $aproposPageRepository,
         CommentRepository $commentRepository,
         SocialRepository $socialRepository,
-        CitationRepository $citationRepository
+        CitationRepository $citationRepository,
+        LinkRepository $linkRepository
     ): Response
     {
         $settings = $settingRepository->findOneBy([]);
@@ -30,6 +32,7 @@ final class AproposController extends AbstractController
         $socials = $socialRepository->findBy(['isActive' => true], ['id' => 'ASC']);
         $aproposPage = $aproposPageRepository->findOneBy([]);
         $citation = $citationRepository->findRandom();
+        $links = $linkRepository->findBy(['isActive' => true], []);
 
         return $this->render('apropos/index.html.twig', [
             'settings' => $settings,
@@ -38,6 +41,7 @@ final class AproposController extends AbstractController
             'comments' => $comments,
             'socials' => $socials,
             'citation' => $citation,
+            'links' => $links,
             'page_title' => 'Apropos',
             'seoTitle' => html_entity_decode($aproposPage->getSeoTitle()),
             'seoDescription' => html_entity_decode($aproposPage->getSeoDescription()),

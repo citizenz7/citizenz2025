@@ -44,7 +44,7 @@
         </div>
     </div>
     <div class="max-w-7xl mx-auto py-6 px-4 xl:px-0 flex flex-col-reverse md:flex-row justify-between items-center">
-        <div class="text-xs md:text-xs/3 flex items-center">
+        <div class="text-xs md:text-xs/3 flex flex-wrap items-center justify-center">
             CitizenJ &bullet;
             <a href="https://www.gnu.org/licenses/gpl-3.0.fr.html" title="Licence GNU GPL v3" target="_blank" class="mx-1 hover:text-orange-600">
                 GPL v3
@@ -52,15 +52,26 @@
             {{ "now"|date("Y") }} &bull; Certains droits reservés &bullet;
             Images&nbsp;<a href="https://pixabay.com/fr/" class="hover:text-orange-600" target="_blank">Pixabay</a>
         </div>
-        <ul class="text-xs md:text-sm flex gap-4 md:gap-5 mb-4 md:mb-0">
-            {% for social in socials %}
-                <li>
-                    <a href="{{ social.url }}" class="hover:text-orange-600 text-xl">
-                        {{ social.icon|raw }}
+        <div class="flex gap-6">
+            {# Liens web #}
+            <div>
+                {% for link in links %}
+                    <a href="{{ link.url }}" target="_blank" class="text-xs md:text-xs/3 hover:text-orange-600">
+                        <i class="fa-solid fa-square-up-right"></i>
+                        {{ link.title }}
                     </a>
-                </li>
-            {% endfor %}
-        </ul>
+                {% endfor %}
+            </div>
+            <ul class="text-xs md:text-sm flex gap-4 md:gap-5 mb-4 md:mb-0">
+                {% for social in socials %}
+                    <li>
+                        <a href="{{ social.url }}" class="hover:text-orange-600 text-xl">
+                            {{ social.icon|raw }}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
     </div>
     <div class="max-w-7xl mx-auto text-center px-4 xl:px-0">
         <blockquote class="text-xs lg:text-sm text-gray-300 border bg-gray-700/90 border-gray-600 p-4 rounded">

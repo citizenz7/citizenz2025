@@ -4,13 +4,14 @@ namespace App\Controller;
 
 use App\Entity\Comment;
 use App\Form\CommentType;
+use App\Repository\TagRepository;
+use App\Repository\LinkRepository;
 use App\Repository\SocialRepository;
 use App\Repository\ArticleRepository;
 use App\Repository\CommentRepository;
 use App\Repository\SettingRepository;
 use App\Repository\CategoryRepository;
 use App\Repository\CitationRepository;
-use App\Repository\TagRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
@@ -33,12 +34,14 @@ final class ArticleController extends AbstractController
         PaginatorInterface $paginator,
         SocialRepository $socialRepository,
         CitationRepository $citationRepository,
+        LinkRepository $linkRepository,
         Request $request
     ): Response {
         $settings = $settingRepository->findOneBy([]);
         $categories = $categoryRepository->findBy(["isActive" => true], ['title' => 'ASC']);
         $comments = $commentRepository->findBy(['isActive' => true], ['createdAt' => 'DESC'], 5);
         $socials = $socialRepository->findBy(['isActive' => true], ['id' => 'ASC']);
+        $links = $linkRepository->findBy(['isActive' => true], []);
 
         $citation = $citationRepository->findRandom();
 
@@ -66,6 +69,7 @@ final class ArticleController extends AbstractController
             'socials' => $socials,
             'categories' => $categories,
             'citation' => $citation,
+            'links' => $links,
             'page_title' => 'Blog',
             'seoTitle' => 'Tous les articles',
             'seoDescription' => 'Tous les articles de notre blog',
@@ -105,6 +109,7 @@ final class ArticleController extends AbstractController
         MailerInterface $mailer,
         SocialRepository $socialRepository,
         CitationRepository $citationRepository,
+        LinkRepository $linkRepository,
         $slug,
     ): Response
     {
@@ -114,6 +119,7 @@ final class ArticleController extends AbstractController
         $tags = $tagRepository->findBy(['isActive' => true], ['title' => 'ASC']);
         $categories = $categoryRepository->findBy(["isActive" => true], ['title' => 'ASC']);
         $socials = $socialRepository->findBy(['isActive' => true], ['id' => 'ASC']);
+        $links = $linkRepository->findBy(['isActive' => true], []);
 
         $citation = $citationRepository->findRandom();
 
@@ -181,6 +187,7 @@ final class ArticleController extends AbstractController
             'commentForm' => $commentForm,
             'socials' => $socials,
             'citation' => $citation,
+            'links' => $links,
             'page_title' => 'Article',
             'seoTitle' => $article->getSeoTitle(),
             'seoDescription' => $article->getSeoDescription(),

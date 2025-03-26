@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Blacklist;
 use App\Form\ContactType;
 use Symfony\Component\Mime\Email;
+use App\Repository\LinkRepository;
 use Symfony\Component\Mime\Address;
 use App\Repository\SocialRepository;
 use App\Repository\CommentRepository;
@@ -31,7 +32,8 @@ final class ContactController extends AbstractController
         Request $request,
         MailerInterface $mailer,
         EntityManagerInterface $em,
-        CitationRepository $citationRepository
+        CitationRepository $citationRepository,
+        LinkRepository $linkRepository
     ): Response
     {
         $settings = $settingRepository->findOneBy([]);
@@ -39,6 +41,7 @@ final class ContactController extends AbstractController
         $comments = $commentRepository->findBy(['isActive' => true], ['createdAt' => 'DESC'], 5);
         $socials = $socialRepository->findBy(['isActive' => true], ['id' => 'ASC']);
         $contactPage = $contactPageRepository->findOneBy([]);
+        $links = $linkRepository->findBy(['isActive' => true], []);
 
         $citation = $citationRepository->findRandom();
 
@@ -93,6 +96,7 @@ final class ContactController extends AbstractController
             'socials' => $socials,
             'contactPage' => $contactPage,
             'citation' => $citation,
+            'links' => $links,
             'page_title' => 'Contact',
             'form' => $form,
             'seoTitle' => html_entity_decode($contactPage->getSeoTitle()),

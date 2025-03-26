@@ -2,11 +2,12 @@
 
 namespace App\Controller;
 
+use App\Repository\LinkRepository;
 use App\Repository\SocialRepository;
+use App\Repository\CguPageRepository;
 use App\Repository\CommentRepository;
 use App\Repository\SettingRepository;
 use App\Repository\CategoryRepository;
-use App\Repository\CguPageRepository;
 use App\Repository\CitationRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -21,7 +22,8 @@ final class CguController extends AbstractController
         CommentRepository $commentRepository,
         SocialRepository $socialRepository,
         CguPageRepository $cguPageRepository,
-        CitationRepository $citationRepository
+        CitationRepository $citationRepository,
+        LinkRepository $linkRepository
     ): Response
     {
         $settings = $settingRepository->findOneBy([]);
@@ -29,6 +31,7 @@ final class CguController extends AbstractController
         $comments = $commentRepository->findBy(['isActive' => true], ['createdAt' => 'DESC'], 5);
         $socials = $socialRepository->findBy(['isActive' => true], ['id' => 'ASC']);
         $cguPage = $cguPageRepository->findOneBy([]);
+        $links = $linkRepository->findBy(['isActive' => true], []);
 
         $citation = $citationRepository->findRandom();
 
@@ -39,6 +42,7 @@ final class CguController extends AbstractController
             'socials' => $socials,
             'cguPage' => $cguPage,
             'citation' => $citation,
+            'links' => $links,
             'page_title' => 'CGU',
             'seoTitle' => $cguPage->getSeoTitle(),
             'seoDescription' => $cguPage->getSeoDescription(),

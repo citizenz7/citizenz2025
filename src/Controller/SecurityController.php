@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\LinkRepository;
 use App\Repository\SocialRepository;
 use App\Repository\CommentRepository;
 use App\Repository\SettingRepository;
@@ -21,12 +22,14 @@ class SecurityController extends AbstractController
         CategoryRepository $categoryRepository,
         CommentRepository $commentRepository,
         SocialRepository $socialRepository,
-        CitationRepository $citationRepository
+        CitationRepository $citationRepository,
+        LinkRepository $linkRepository
     ): Response {
         $settings = $settingRepository->findOneBy([]);
         $categories = $categoryRepository->findBy(["isActive" => true], ['title' => 'ASC']);
         $comments = $commentRepository->findBy(['isActive' => true], ['createdAt' => 'DESC'], 5);
         $socials = $socialRepository->findBy(['isActive' => true], ['id' => 'ASC']);
+        $links = $linkRepository->findBy(['isActive' => true], []);
 
         $citation = $citationRepository->findRandom();
 
@@ -44,6 +47,7 @@ class SecurityController extends AbstractController
             'comments' => $comments,
             'socials' => $socials,
             'citation' => $citation,
+            'links' => $links,
             'page_title' => 'Login',
             'seoUrl' => $this->generateUrl('app_login'),
             'seoTitle' => 'Connexion',

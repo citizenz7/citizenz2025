@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Form\RechercheArticleType;
+use App\Repository\LinkRepository;
 use App\Repository\SocialRepository;
 use App\Repository\ArticleRepository;
 use App\Repository\CommentRepository;
@@ -25,6 +26,7 @@ final class SearchController extends AbstractController
         CommentRepository $commentRepository,
         SocialRepository $socialRepository,
         CitationRepository $citationRepository,
+        LinkRepository $linkRepository,
         Request $request,
         PaginatorInterface $paginator,
     ): Response
@@ -34,6 +36,7 @@ final class SearchController extends AbstractController
         $comments = $commentRepository->findBy(['isActive' => true], ['createdAt' => 'DESC'], 5);
         $socials = $socialRepository->findBy(['isActive' => true], ['id' => 'ASC']);
         $citation = $citationRepository->findRandom();
+        $links = $linkRepository->findBy(['isActive' => true], []);
 
         $searchForm = $this->createForm(RechercheArticleType::class);
         $searchForm->handleRequest($request);
@@ -57,6 +60,7 @@ final class SearchController extends AbstractController
             'comments' => $comments,
             'socials' => $socials,
             'citation' => $citation,
+            'links' => $links,
             'page_title' => 'Recherche',
             'seoTitle' => 'Recherche',
             'seoDescription' => 'Recherche',

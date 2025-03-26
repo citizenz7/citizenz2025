@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Category;
 use App\Form\CategoryType;
+use App\Repository\LinkRepository;
 use App\Repository\SocialRepository;
 use App\Repository\CommentRepository;
 use App\Repository\SettingRepository;
@@ -24,12 +25,14 @@ final class CategoryController extends AbstractController
         SettingRepository $settingRepository,
         SocialRepository $socialRepository,
         CommentRepository $commentRepository,
-        CitationRepository $citationRepository
+        CitationRepository $citationRepository,
+        LinkRepository $linkRepository
     ): Response {
         $settings = $settingRepository->findOneBy([]);
         $categories = $categoryRepository->findBy(["isActive" => true], ['title' => 'ASC']);
         $socials = $socialRepository->findBy(['isActive' => true], ['id' => 'ASC']);
         $comments = $commentRepository->findBy(['isActive' => true], ['createdAt' => 'DESC'], 5);
+        $links = $linkRepository->findBy(['isActive' => true], []);
 
         $citation = $citationRepository->findRandom();
 
@@ -39,6 +42,7 @@ final class CategoryController extends AbstractController
             'socials' => $socials,
             'comments' => $comments,
             'citation' => $citation,
+            'links' => $links,
             'page_title' => 'Categories',
             'seoTitle' => 'Catégories',
             'seoDescription' => 'Tous les catégories d\'articles',
@@ -74,6 +78,7 @@ final class CategoryController extends AbstractController
         SocialRepository $socialRepository,
         CommentRepository $commentRepository,
         CitationRepository $citationRepository,
+        LinkRepository $linkRepository,
         string $slug
     ): Response {
         $settings = $settingRepository->findOneBy([]);
@@ -81,6 +86,7 @@ final class CategoryController extends AbstractController
         $socials = $socialRepository->findBy(['isActive' => true], ['id' => 'ASC']);
         $comments = $commentRepository->findBy(['isActive' => true], ['createdAt' => 'DESC'], 5);
         $category = $categoryRepository->findOneBy(['slug' => $slug]);
+        $links = $linkRepository->findBy(['isActive' => true], []);
 
         $citation = $citationRepository->findRandom();
 
@@ -91,6 +97,7 @@ final class CategoryController extends AbstractController
             'socials' => $socials,
             'comments' => $comments,
             'citation' => $citation,
+            'links' => $links,
             'page_title' => $category->getTitle(),
             'seoTitle' => $category->getTitle(),
             'seoDescription' => $category->getTitle(),

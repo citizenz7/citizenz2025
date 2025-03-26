@@ -7,6 +7,7 @@ use App\Repository\CategoryRepository;
 use App\Repository\CitationRepository;
 use App\Repository\CommentRepository;
 use App\Repository\HomePageRepository;
+use App\Repository\LinkRepository;
 use App\Repository\SettingRepository;
 use App\Repository\SocialRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -23,7 +24,8 @@ final class HomeController extends AbstractController
         HomePageRepository $homePageRepository,
         CommentRepository $commentRepository,
         SocialRepository $socialRepository,
-        CitationRepository $citationRepository
+        CitationRepository $citationRepository,
+        LinkRepository $linkRepository
     ): Response
     {
         $settings = $settingRepository->findOneBy([]);
@@ -32,6 +34,7 @@ final class HomeController extends AbstractController
         $comments = $commentRepository->findBy(['isActive' => true], ['createdAt' => 'DESC'], 5);
         $homePage = $homePageRepository->findOneBy([]);
         $socials = $socialRepository->findBy(['isActive' => true], ['id' => 'ASC']);
+        $links = $linkRepository->findBy(['isActive' => true], []);
 
         $citation = $citationRepository->findRandom();
 
@@ -51,6 +54,7 @@ final class HomeController extends AbstractController
             'homePage' => $homePage,
             'socials' => $socials,
             'citation' => $citation,
+            'links' => $links,
             'page_title' => 'Home',
             'seoTitle' => $homePage->getSeoTitle(),
             'seoDescription' => $homePage->getSeoDescription(),
