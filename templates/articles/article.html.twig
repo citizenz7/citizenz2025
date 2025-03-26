@@ -53,7 +53,7 @@
 						{# Comments #}
 						<a href="#comments">
 							<i class="fa-regular fa-comment"></i>
-							{{ article.comments|length }}
+							{{ article.comments|filter(comment => comment.isActive == true)|length }}
 						</a> |
 						{# Views #}
 						<i class="fa-regular fa-eye"></i>
