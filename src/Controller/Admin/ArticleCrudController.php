@@ -71,8 +71,8 @@ class ArticleCrudController extends AbstractCrudController
                 ->setColumns(12)
                 ->hideOnIndex()
                 ->hideOnDetail()
-                ->setFormType(CKEditorType::class)
-                ->setFormTypeOption('config', ['height' => '500px']),
+                ->setFormTypeOption('row_attr', ['class' => 'field-content-large']),
+
             TextareaField::new('content', 'Contenu')
                 ->hideOnForm()
                 ->hideOnIndex()
@@ -132,7 +132,7 @@ class ArticleCrudController extends AbstractCrudController
             ->setDefaultSort(['id' => 'DESC'])
             ->setEntityLabelInPlural('Articles')
             ->setEntityLabelInSingular('Article')
-            ->addFormTheme('@FOSCKEditor/Form/ckeditor_widget.html.twig')
+            // ->addFormTheme('@FOSCKEditor/Form/ckeditor_widget.html.twig')
             ->showEntityActionsInlined(true)
             ->setPaginatorPageSize(10);
     }

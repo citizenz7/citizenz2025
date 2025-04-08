@@ -2,13 +2,8 @@
 Ce projet est une adaptation de CitizenZ 2025 pour Symfony 7.2 et Tailwindcss 4.
 
 ### Lancer les serveurs
-```bash
-symfony serve
-```
-
-```bash
-symfony console tailwind:build --watch
-```
+`symfony serve`
+`symfony console tailwind:build --watch`
 
 ### ENVIRONNEMENT
 * Symfony 7.2
