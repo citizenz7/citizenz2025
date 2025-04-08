@@ -70,6 +70,11 @@
 					{% endfor %}
 				</div>
 
+				{# Intro #}
+				<div class="mt-8">
+					<p class="text-sm md:text-base text-wrap">{{ article.intro|replace({'<div>': '', '</div>': '', '<p>': '', '</p>': ''})|raw|nl2br }}</p>
+				</div>
+
 				{# Content #}
 				<div class="mt-8">
 					<p class="text-sm md:text-base text-wrap">{{ article.content|replace({'<div>': '', '</div>': '', '<p>': '', '</p>': ''})|raw|nl2br }}</p>
