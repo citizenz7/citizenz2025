@@ -44,6 +44,9 @@ final class HomeController extends AbstractController
         // Articles most views and active
         $articlesMostViews = $articleRepository->findBy(['isActive' => true], ['views' => 'DESC'], 4);
 
+        // Total views of all articles
+        $totalViews = $articleRepository->totalViews();
+
         return $this->render('home/index.html.twig', [
             'settings' => $settings,
             'categories' => $categories,
@@ -55,6 +58,7 @@ final class HomeController extends AbstractController
             'socials' => $socials,
             'citation' => $citation,
             'links' => $links,
+            'total_views' => $totalViews,
             'page_title' => 'Home',
             'seoTitle' => $homePage->getSeoTitle(),
             'seoDescription' => $homePage->getSeoDescription(),
