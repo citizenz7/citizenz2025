@@ -7,6 +7,7 @@ use App\Form\TagType;
 use App\Repository\TagRepository;
 use App\Repository\LinkRepository;
 use App\Repository\SocialRepository;
+use App\Repository\ArticleRepository;
 use App\Repository\CommentRepository;
 use App\Repository\SettingRepository;
 use App\Repository\CategoryRepository;
@@ -24,6 +25,7 @@ final class TagController extends AbstractController
     public function index(
         SettingRepository $settingRepository,
         CategoryRepository $categoryRepository,
+        ArticleRepository $articleRepository,
         CommentRepository $commentRepository,
         SocialRepository $socialRepository,
         CitationRepository $citationRepository,
@@ -37,6 +39,7 @@ final class TagController extends AbstractController
         $socials = $socialRepository->findBy(['isActive' => true], ['id' => 'ASC']);
         $links = $linkRepository->findBy(['isActive' => true], []);
         $citation = $citationRepository->findRandom();
+        $totalViews = $articleRepository->totalViews();
 
         return $this->render('tag/index.html.twig', [
             'settings' => $settings,
@@ -45,6 +48,7 @@ final class TagController extends AbstractController
             'socials' => $socials,
             'citation' => $citation,
             'links' => $links,
+            'total_views' => $totalViews,
             'tags' => $tags,
             'page_title' => 'Liste des Tags',
             'seoTitle' => 'Liste des Tags',
@@ -78,6 +82,7 @@ final class TagController extends AbstractController
         // Tag $tag
         SettingRepository $settingRepository,
         CategoryRepository $categoryRepository,
+        ArticleRepository $articleRepository,
         CommentRepository $commentRepository,
         SocialRepository $socialRepository,
         CitationRepository $citationRepository,
@@ -91,8 +96,8 @@ final class TagController extends AbstractController
         $socials = $socialRepository->findBy(['isActive' => true], ['id' => 'ASC']);
         $citation = $citationRepository->findRandom();
         $links = $linkRepository->findBy(['isActive' => true], []);
-
         $tag = $tagRepository->findOneBy(['slug' => $slug]);
+        $totalViews = $articleRepository->totalViews();
 
         return $this->render('tag/show.html.twig', [
             'settings' => $settings,
@@ -101,6 +106,7 @@ final class TagController extends AbstractController
             'socials' => $socials,
             'citation' => $citation,
             'links' => $links,
+            'total_views' => $totalViews,
             'page_title' => $tag->getTitle(),
             'seoTitle' => html_entity_decode($tag->getTitle()),
             'seoDescription' => html_entity_decode($tag->getTitle()),

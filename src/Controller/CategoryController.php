@@ -6,6 +6,7 @@ use App\Entity\Category;
 use App\Form\CategoryType;
 use App\Repository\LinkRepository;
 use App\Repository\SocialRepository;
+use App\Repository\ArticleRepository;
 use App\Repository\CommentRepository;
 use App\Repository\SettingRepository;
 use App\Repository\CategoryRepository;
@@ -22,6 +23,7 @@ final class CategoryController extends AbstractController
     #[Route(name: 'app_category_index', methods: ['GET'])]
     public function index(
         CategoryRepository $categoryRepository,
+        ArticleRepository $articleRepository,
         SettingRepository $settingRepository,
         SocialRepository $socialRepository,
         CommentRepository $commentRepository,
@@ -33,8 +35,9 @@ final class CategoryController extends AbstractController
         $socials = $socialRepository->findBy(['isActive' => true], ['id' => 'ASC']);
         $comments = $commentRepository->findBy(['isActive' => true], ['createdAt' => 'DESC'], 5);
         $links = $linkRepository->findBy(['isActive' => true], []);
-
         $citation = $citationRepository->findRandom();
+        // Total views of all articles
+        $totalViews = $articleRepository->totalViews();
 
         return $this->render('category/index.html.twig', [
             'categories' => $categories,
@@ -43,6 +46,7 @@ final class CategoryController extends AbstractController
             'comments' => $comments,
             'citation' => $citation,
             'links' => $links,
+            'total_views' => $totalViews,
             'page_title' => 'Categories',
             'seoTitle' => 'Catégories',
             'seoDescription' => 'Tous les catégories d\'articles',
@@ -75,6 +79,7 @@ final class CategoryController extends AbstractController
         // Category $category
         SettingRepository $settingRepository,
         CategoryRepository $categoryRepository,
+        ArticleRepository $articleRepository,
         SocialRepository $socialRepository,
         CommentRepository $commentRepository,
         CitationRepository $citationRepository,
@@ -87,8 +92,9 @@ final class CategoryController extends AbstractController
         $comments = $commentRepository->findBy(['isActive' => true], ['createdAt' => 'DESC'], 5);
         $category = $categoryRepository->findOneBy(['slug' => $slug]);
         $links = $linkRepository->findBy(['isActive' => true], []);
-
         $citation = $citationRepository->findRandom();
+        // Total views of all articles
+        $totalViews = $articleRepository->totalViews();
 
         return $this->render('category/show.html.twig', [
             'category' => $category,
@@ -98,6 +104,7 @@ final class CategoryController extends AbstractController
             'comments' => $comments,
             'citation' => $citation,
             'links' => $links,
+            'total_views' => $totalViews,
             'page_title' => $category->getTitle(),
             'seoTitle' => $category->getTitle(),
             'seoDescription' => $category->getTitle(),

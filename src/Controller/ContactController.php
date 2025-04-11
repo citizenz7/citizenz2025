@@ -8,6 +8,7 @@ use Symfony\Component\Mime\Email;
 use App\Repository\LinkRepository;
 use Symfony\Component\Mime\Address;
 use App\Repository\SocialRepository;
+use App\Repository\ArticleRepository;
 use App\Repository\CommentRepository;
 use App\Repository\SettingRepository;
 use App\Repository\CategoryRepository;
@@ -26,6 +27,7 @@ final class ContactController extends AbstractController
     public function index(
         SettingRepository $settingRepository,
         CategoryRepository $categoryRepository,
+        ArticleRepository $articleRepository,
         CommentRepository $commentRepository,
         SocialRepository $socialRepository,
         ContactPageRepository $contactPageRepository,
@@ -42,8 +44,9 @@ final class ContactController extends AbstractController
         $socials = $socialRepository->findBy(['isActive' => true], ['id' => 'ASC']);
         $contactPage = $contactPageRepository->findOneBy([]);
         $links = $linkRepository->findBy(['isActive' => true], []);
-
         $citation = $citationRepository->findRandom();
+        // Total views of all articles
+        $totalViews = $articleRepository->totalViews();
 
         $form = $this->createForm(ContactType::class);
         $form->handleRequest($request);
@@ -97,6 +100,7 @@ final class ContactController extends AbstractController
             'contactPage' => $contactPage,
             'citation' => $citation,
             'links' => $links,
+            'total_views' => $totalViews,
             'page_title' => 'Contact',
             'form' => $form,
             'seoTitle' => html_entity_decode($contactPage->getSeoTitle()),

@@ -42,8 +42,8 @@ final class ArticleController extends AbstractController
         $comments = $commentRepository->findBy(['isActive' => true], ['createdAt' => 'DESC'], 5);
         $socials = $socialRepository->findBy(['isActive' => true], ['id' => 'ASC']);
         $links = $linkRepository->findBy(['isActive' => true], []);
-
         $citation = $citationRepository->findRandom();
+        $totalViews = $articleRepository->totalViews();
 
         // Pagination
         $dql = "SELECT a FROM App\Entity\Article a WHERE a.isActive = 1 ORDER BY a.createdAt DESC";
@@ -70,6 +70,7 @@ final class ArticleController extends AbstractController
             'categories' => $categories,
             'citation' => $citation,
             'links' => $links,
+            'total_views' => $totalViews,
             'page_title' => 'Blog',
             'seoTitle' => 'Tous les articles',
             'seoDescription' => 'Tous les articles de notre blog',
@@ -120,8 +121,9 @@ final class ArticleController extends AbstractController
         $categories = $categoryRepository->findBy(["isActive" => true], ['title' => 'ASC']);
         $socials = $socialRepository->findBy(['isActive' => true], ['id' => 'ASC']);
         $links = $linkRepository->findBy(['isActive' => true], []);
-
         $citation = $citationRepository->findRandom();
+        // Total views of all articles
+        $totalViews = $articleRepository->totalViews();
 
         // Articles features and active
         $articlesFeatured = $articleRepository->findBy(['isFeatured' => true, 'isActive' => true], ['createdAt' => 'DESC'], 4);
@@ -188,6 +190,7 @@ final class ArticleController extends AbstractController
             'socials' => $socials,
             'citation' => $citation,
             'links' => $links,
+            'total_views' => $totalViews,
             'page_title' => 'Article',
             'seoTitle' => $article->getSeoTitle(),
             'seoDescription' => $article->getSeoDescription(),

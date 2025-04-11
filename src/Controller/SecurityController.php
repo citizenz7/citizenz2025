@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Repository\LinkRepository;
 use App\Repository\SocialRepository;
+use App\Repository\ArticleRepository;
 use App\Repository\CommentRepository;
 use App\Repository\SettingRepository;
 use App\Repository\CategoryRepository;
@@ -20,6 +21,7 @@ class SecurityController extends AbstractController
         AuthenticationUtils $authenticationUtils,
         SettingRepository $settingRepository,
         CategoryRepository $categoryRepository,
+        ArticleRepository $articleRepository,
         CommentRepository $commentRepository,
         SocialRepository $socialRepository,
         CitationRepository $citationRepository,
@@ -30,8 +32,9 @@ class SecurityController extends AbstractController
         $comments = $commentRepository->findBy(['isActive' => true], ['createdAt' => 'DESC'], 5);
         $socials = $socialRepository->findBy(['isActive' => true], ['id' => 'ASC']);
         $links = $linkRepository->findBy(['isActive' => true], []);
-
         $citation = $citationRepository->findRandom();
+        // Total views of all articles
+        $totalViews = $articleRepository->totalViews();
 
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
@@ -48,6 +51,7 @@ class SecurityController extends AbstractController
             'socials' => $socials,
             'citation' => $citation,
             'links' => $links,
+            'total_views' => $totalViews,
             'page_title' => 'Login',
             'seoUrl' => $this->generateUrl('app_login'),
             'seoTitle' => 'Connexion',

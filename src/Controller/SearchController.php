@@ -37,6 +37,8 @@ final class SearchController extends AbstractController
         $socials = $socialRepository->findBy(['isActive' => true], ['id' => 'ASC']);
         $citation = $citationRepository->findRandom();
         $links = $linkRepository->findBy(['isActive' => true], []);
+        // Total views of all articles
+        $totalViews = $articleRepository->totalViews();
 
         $searchForm = $this->createForm(RechercheArticleType::class);
         $searchForm->handleRequest($request);
@@ -61,6 +63,7 @@ final class SearchController extends AbstractController
             'socials' => $socials,
             'citation' => $citation,
             'links' => $links,
+            'total_views' => $totalViews,
             'page_title' => 'Recherche',
             'seoTitle' => 'Recherche',
             'seoDescription' => 'Recherche',

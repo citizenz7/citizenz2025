@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Repository\LinkRepository;
 use App\Repository\SocialRepository;
+use App\Repository\ArticleRepository;
 use App\Repository\CguPageRepository;
 use App\Repository\CommentRepository;
 use App\Repository\SettingRepository;
@@ -19,6 +20,7 @@ final class CguController extends AbstractController
     public function index(
         SettingRepository $settingRepository,
         CategoryRepository $categoryRepository,
+        ArticleRepository $articleRepository,
         CommentRepository $commentRepository,
         SocialRepository $socialRepository,
         CguPageRepository $cguPageRepository,
@@ -32,8 +34,9 @@ final class CguController extends AbstractController
         $socials = $socialRepository->findBy(['isActive' => true], ['id' => 'ASC']);
         $cguPage = $cguPageRepository->findOneBy([]);
         $links = $linkRepository->findBy(['isActive' => true], []);
-
         $citation = $citationRepository->findRandom();
+        // Total views of all articles
+        $totalViews = $articleRepository->totalViews();
 
         return $this->render('cgu/index.html.twig', [
             'settings' => $settings,
@@ -43,6 +46,7 @@ final class CguController extends AbstractController
             'cguPage' => $cguPage,
             'citation' => $citation,
             'links' => $links,
+            'total_views' => $totalViews,
             'page_title' => 'CGU',
             'seoTitle' => $cguPage->getSeoTitle(),
             'seoDescription' => $cguPage->getSeoDescription(),

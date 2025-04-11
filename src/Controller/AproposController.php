@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Repository\LinkRepository;
 use App\Repository\SocialRepository;
+use App\Repository\ArticleRepository;
 use App\Repository\CommentRepository;
 use App\Repository\SettingRepository;
 use App\Repository\CategoryRepository;
@@ -19,6 +20,7 @@ final class AproposController extends AbstractController
     public function index(
         SettingRepository $settingRepository,
         CategoryRepository $categoryRepository,
+        ArticleRepository $articleRepository,
         AproposPageRepository $aproposPageRepository,
         CommentRepository $commentRepository,
         SocialRepository $socialRepository,
@@ -33,6 +35,8 @@ final class AproposController extends AbstractController
         $aproposPage = $aproposPageRepository->findOneBy([]);
         $citation = $citationRepository->findRandom();
         $links = $linkRepository->findBy(['isActive' => true], []);
+        // Total views of all articles
+        $totalViews = $articleRepository->totalViews();
 
         return $this->render('apropos/index.html.twig', [
             'settings' => $settings,
@@ -42,6 +46,7 @@ final class AproposController extends AbstractController
             'socials' => $socials,
             'citation' => $citation,
             'links' => $links,
+            'total_views' => $totalViews,
             'page_title' => 'Apropos',
             'seoTitle' => html_entity_decode($aproposPage->getSeoTitle()),
             'seoDescription' => html_entity_decode($aproposPage->getSeoDescription()),
