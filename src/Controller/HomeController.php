@@ -39,13 +39,16 @@ final class HomeController extends AbstractController
         $citation = $citationRepository->findRandom();
 
         // Articles features and active
-        $articlesFeatured = $articleRepository->findBy(['isFeatured' => true, 'isActive' => true], ['createdAt' => 'DESC'], 4);
+        $articlesFeatured = $articleRepository->findBy(['isFeatured' => true, 'isActive' => true], ['createdAt' => 'DESC'], 3);
 
         // Articles most views and active
-        $articlesMostViews = $articleRepository->findBy(['isActive' => true], ['views' => 'DESC'], 4);
+        $articlesMostViews = $articleRepository->findBy(['isActive' => true], ['views' => 'DESC'], 3);
 
         // Total views of all articles
         $totalViews = $articleRepository->totalViews();
+
+        // 3 articles les plus likés avec la fonction findMostLikedArticles
+        $articlesMostLikes = $articleRepository->findMostLikedArticles();
 
         return $this->render('home/index.html.twig', [
             'settings' => $settings,
@@ -53,6 +56,7 @@ final class HomeController extends AbstractController
             'articles' => $articles,
             'articlesFeatured' => $articlesFeatured,
             'articlesMostViews' => $articlesMostViews,
+            'articlesMostLikes' => $articlesMostLikes,
             'comments' => $comments,
             'homePage' => $homePage,
             'socials' => $socials,

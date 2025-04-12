@@ -3,8 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\Article;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @extends ServiceEntityRepository<Article>
@@ -46,7 +47,7 @@ class ArticleRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('a')
             ->andWhere('a.title LIKE :title')
             ->andWhere('a.isActive = true')
-            ->setParameter('title', '%'.$title.'%')
+            ->setParameter('title', '%' . $title . '%')
             ->getQuery()
             ->execute();
     }
@@ -74,5 +75,16 @@ class ArticleRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult()
         ;
+    }
+
+    public function findMostLikedArticles(int $limit = 3): array
+    {
+        return $this->createQueryBuilder('a')
+            ->leftJoin('a.likes', 'l')
+            ->groupBy('a.id')
+            ->orderBy('COUNT(l.id)', 'DESC')
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult();
     }
 }

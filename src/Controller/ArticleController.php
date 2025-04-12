@@ -61,8 +61,12 @@ final class ArticleController extends AbstractController
         // Articles most views and active
         $articlesMostViews = $articleRepository->findBy(['isActive' => true], ['views' => 'DESC'], 4);
 
+        // 3 articles les plus likés avec la fonction findMostLikedArticles
+        $articlesMostLikes = $articleRepository->findMostLikedArticles();
+
         return $this->render('articles/index.html.twig', [
             'articles' => $articles,
+            'articlesMostLikes' => $articlesMostLikes,
             'comments' => $comments,
             'settings' => $settings,
             'articlesFeatured' => $articlesFeatured,
@@ -133,6 +137,9 @@ final class ArticleController extends AbstractController
         // Articles most views and active
         $articlesMostViews = $articleRepository->findBy(['isActive' => true], ['views' => 'DESC'], 4);
 
+        // 3 articles les plus likés avec la fonction findMostLikedArticles
+        $articlesMostLikes = $articleRepository->findMostLikedArticles();
+
         // On renvoie sur Home si l'article est inactif
         if ($article->isActive() == false) {
             return $this->redirectToRoute('app_home');
@@ -191,6 +198,7 @@ final class ArticleController extends AbstractController
 
         return $this->render('articles/article.html.twig', [
             'article' => $article,
+            'articlesMostLikes' => $articlesMostLikes,
             'liked' => $existingLike ? true : false, // true si déjà liké, false sinon
             'likesCount' => $likesCount,  // Nombre de likes
             'settings' => $settings,
