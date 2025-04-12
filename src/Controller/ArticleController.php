@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Like;
 use App\Entity\Comment;
 use App\Form\CommentType;
 use App\Repository\TagRepository;
@@ -122,6 +123,7 @@ final class ArticleController extends AbstractController
         $socials = $socialRepository->findBy(['isActive' => true], ['id' => 'ASC']);
         $links = $linkRepository->findBy(['isActive' => true], []);
         $citation = $citationRepository->findRandom();
+
         // Total views of all articles
         $totalViews = $articleRepository->totalViews();
 
@@ -135,6 +137,15 @@ final class ArticleController extends AbstractController
         if ($article->isActive() == false) {
             return $this->redirectToRoute('app_home');
         }
+
+        // Vérifie si l'IP a déjà liké cet article pour initialiser l'état du like
+        $ip = $request->getClientIp();
+        $existingLike = $em->getRepository(Like::class)->findOneBy([
+            'article' => $article,
+            'ipAddress' => $ip
+        ]);
+        // Calculer le nombre de likes
+        $likesCount = count($article->getLikes());
 
         // Set +1 view for each visit
         $read = $article->getViews() + 1;
@@ -180,6 +191,8 @@ final class ArticleController extends AbstractController
 
         return $this->render('articles/article.html.twig', [
             'article' => $article,
+            'liked' => $existingLike ? true : false, // true si déjà liké, false sinon
+            'likesCount' => $likesCount,  // Nombre de likes
             'settings' => $settings,
             'comments' => $comments,
             'categories' => $categories,

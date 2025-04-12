@@ -3,7 +3,8 @@
 {# {% block title %}Article{% endblock %} #}
 
 {% block body %}
-	<div class="max-w-7xl mx-auto pt-32 pb-20 relative flex flex-wrap gap-6 md:gap-8 lg:gap-14">
+	<div
+		class="max-w-7xl mx-auto pt-32 pb-20 relative flex flex-wrap gap-6 md:gap-8 lg:gap-14">
 
 		{# Left column #}
 		<div class="w-full md:w-[73%] px-4">
@@ -23,7 +24,14 @@
 
 				{# Article #}
 				<img src="{{ asset('uploads/img/articles/' ~ article.imageFeatured) }}" alt="{{ article.title }}" class="h-[450px] w-full object-cover rounded-t-2xl shadow-lg mt-5">
-				<h1 class="text-2xl md:text-3xl font-bold text-sky-800 mt-4">{{ article.title }}</h1>
+				<div class="flex justify-between items-center mt-4">
+					<h1 class="text-2xl md:text-3xl font-bold text-sky-800">{{ article.title }}</h1>
+					<!-- Bouton Like -->
+					<button id="like-btn" data-id="{{ article.id }}" class="flex items-center gap-2 px-4 py-2 rounded-full {{ liked ? 'text-white bg-blue-500' : 'text-gray-700 bg-gray-200' }} transition duration-300 ease-in-out">
+						<i id="like-icon" class="fa {{ liked ? 'fa-thumbs-down' : 'fa-thumbs-up' }}"></i>
+        				<span id="like-count">{{ likesCount }}</span>
+					</button>
+				</div>
 				<div class="text-xs md:text-sm text-gray-500 mt-2 flex flex-wrap justify-between">
 					<span>
 						{# Author #}
@@ -54,14 +62,16 @@
 						<a href="#comments">
 							<i class="fa-regular fa-comment"></i>
 							{{ article.comments|filter(comment => comment.isActive == true)|length }}
-						</a> |
+						</a>
+						|
 						{# Views #}
 						<i class="fa-regular fa-eye"></i>
 						{{ article.views }}
 					</span>
 				</div>
 
-				<div class="mt-1">
+				<div
+					class="mt-1">
 					{# Tags #}
 					{% for tag in article.tags %}
 						<a class="text-xs/7 text-gray-500 font-medium border border-gray-200 px-1 py-1 rounded mr-1 hover:bg-orange-100" href="{{ path('app_tag_show', {'slug': tag.slug}) }}">
