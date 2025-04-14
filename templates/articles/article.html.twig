@@ -82,12 +82,12 @@
 
 				{# Intro #}
 				<div class="mt-8">
-					<p class="text-sm md:text-base break-all">{{ article.intro|replace({'<div>': '', '</div>': '', '<p>': '', '</p>': ''})|raw|nl2br }}</p>
+					<p class="text-sm md:text-base">{{ article.intro|replace({'<div>': '', '</div>': '', '<p>': '', '</p>': ''})|raw|nl2br }}</p>
 				</div>
 
 				{# Content #}
 				<div class="mt-8">
-					<p class="text-sm md:text-base break-all">{{ article.content|replace({'<div>': '', '</div>': '', '<p>': '', '</p>': ''})|raw|nl2br }}</p>
+					<p class="text-sm md:text-base break-words">{{ article.content|replace({'<div>': '', '</div>': '', '<p>': '', '</p>': ''})|raw|nl2br }}</p>
 				</div>
 
 				{# Auhtor bio #}
